@@ -2,13 +2,10 @@ User = require('./models/user').Model
 passport = require('passport')
 LocalStrategy = require('passport-local').Strategy
 
-module.exports = (app) ->
-  app.use(passport.initialize());
-  app.use(passport.session()); 
-
+module.exports = () ->
+    
   passport.serializeUser (user, done) ->
     done null, user.username
-
 
   passport.deserializeUser (username, done) ->
     User.findOne username, (err, user) ->

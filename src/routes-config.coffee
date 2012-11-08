@@ -1,4 +1,5 @@
 routes = require('./routes')
+user = require('./routes/user')
 project = require('./routes/project')  
 passport = require('passport')
 
