@@ -1,7 +1,12 @@
 doctype 5
 html
   head
-    title= title
+    if locals.title
+      title= title
+    else
+      title= 'AntHill'
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    if locals.message
+      #flash= message
     block content

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  ul#projects
+    each project in projects
+       li.project
+        a(href='/project/#{project.name}')
+          .name=project.name
+          .description=project.description
+          .requirements=project.requirements.length
