@@ -1,7 +1,10 @@
 extends ../layout
 
 block content
-  a(href='/project/new') New Project
+  //show create new project form  
+  a(href='/projects/new') New Project
+
+  //show my projects 
   ul#projects
     if locals.projects
       each project in projects
@@ -10,3 +13,5 @@ block content
             .name=project.name
             .description=project.description
             .requirements=project.requirements.length
+  
+  

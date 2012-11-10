@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+  if locals.project
+    a(href='/projects/#{project.name}/requirements/new') New Requirement
+    
+    //show project estimated stats
+    
+    //show project actual stats
+    
+    //list all requirements for projects
+    ul#requirements
+      each requirement in project.requirements
+        li.requirement
+          a(href='/projects/#{project.name}/requirements/#{requirement.name}')
+            .name=requirement.name
+            .description=requirement.description
+    //show list of users for this project
+    ul#users  
+      each user in project.users
+        li.user
+          .name=user.username
+          .role=user.role
+          form(action="/projects/#{project.name}/users",method="post")
+            input(type="hidden", name="_method", value="delete")
+            input(type="hidden", name="username", value=user.username)
+            button(type="submit") Remove
+      
+    
+    //add user to project form
+    form(action="/projects/#{project.name}/users",method="post")
+      |Username
+      input(type="text", name="username")
+      select(name='role')
+        option(value='member') Member
+        option(value='manager') Manager
+      button(type="submit") Add
+
+
