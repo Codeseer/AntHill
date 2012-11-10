@@ -1,6 +1,5 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
-ObjectId = Schema.ObjectId
 Project = require('./project').Model
 
 User = new Schema
@@ -9,7 +8,7 @@ User = new Schema
     unique: true
     required: true
   password: String
-  project_ids: [ObjectId]
+  projects: [String]
 
 # password validation logic
 User.methods.validPassword = (password, done) ->
@@ -20,10 +19,10 @@ User.methods.validPassword = (password, done) ->
 
 # retrive an array of projects from the database
 User.methods.getProjects = (cb) ->
-  Project.findOne(
-    _id:
+  Project.find(
+    name:
       $in: 
-        this.project_ids
+        this.projects
     ).exec (err, projects)->
       if err
         cb err

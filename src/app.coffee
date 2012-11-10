@@ -7,7 +7,7 @@ routesConfig = require("./routes-config")
 mongoose = require("mongoose")
 
 app = express()
-mongoose.connect "mongodb://nodejitsu:a0d9eb7a816c8aa13dd1841baf9c6a2b@alex.mongohq.com:10086/nodejitsudb284536924124"
+mongoose.connect "mongodb://admin:SPSU2012@ds037817.mongolab.com:37817/anthill"
 
 app.configure ->
   app.set "port", process.env.PORT or 3000
@@ -20,9 +20,24 @@ app.configure ->
   app.use express.cookieParser()
   app.use express.session(secret: "28FFB9ABAB6B0961799D52E171D2E06352B9A0BB8679708A42C98B20AC6680A6")
   app.use passport.initialize()
-  app.use passport.session()
+  app.use passport.session()  
+  
+  app.use (req, res, next) ->
+    messages = req.session.messages || req.session.messages = []
+    res.flash = (type, text) ->
+      messages.push 
+        'type': type
+        'text': text
+    next()
+  app.use (req, res, next) ->
+    res.locals.messages = req.session.messages
+    next()
+  app.use (req, res, next) ->
+    res.locals.user = req.user
+    next()
   app.use app.router
   app.use express.static(path.join(__dirname, "public"))
+
 
 app.configure "development", ->
   app.use express.errorHandler()

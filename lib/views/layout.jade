@@ -7,6 +7,11 @@ html
       title= 'AntHill'
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    if locals.message
-      #flash= message
+    if locals.messages
+      ul#messages
+        while messages.length > 0
+          -var message = messages.pop()
+          li(class=message.type)=message.text
+    if user
+      a(href='/logout') Logout
     block content

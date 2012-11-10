@@ -1,10 +1,12 @@
-extends layout
+extends ../layout
 
 block content
+  a(href='/project/new') New Project
   ul#projects
-    each project in projects
-       li.project
-        a(href='/project/#{project.name}')
-          .name=project.name
-          .description=project.description
-          .requirements=project.requirements.length
+    if locals.projects
+      each project in projects
+        li.project
+          a(href='/projects/#{project.name}')
+            .name=project.name
+            .description=project.description
+            .requirements=project.requirements.length

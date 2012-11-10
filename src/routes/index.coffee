@@ -1,37 +1,41 @@
 User = require('../models/user').Model
-
-exports.index = (req, res) ->
-  if(!req.user)
-    res.redirect '/login'
-  else
-    res.redirect '/users'
-
-#handles the get request
-exports.login = (req, res) ->
-  res.render 'login'
-
-exports.logout = (req, res) ->
-  req.logOut()
-  req.redirect '/'
-
-exports.register = (req, res) ->
-  res.render 'register'
-
-exports.registerPost = (req, res) ->
-  b = req.body
-  if(b.username && b.password)
-    if(b.password != b.passwordConfirm)
-      return res.render 'register', message: 'Passwords are not the same.'
+passport = require('passport')
+module.exports = (app)->
+  app.get '/', (req, res) ->
+    if(!req.user)
+      res.redirect '/login'
     else
-      #try to add to database
-      newUser = new User()
-      newUser.username = b.username
-      newUser.password = b.password
-      newUser.save (err) ->
-        if err
-          return res.render 'register', message: err
-        else
-          return res.render 'index', message: 'You have been successfully registered.'
-  else
-    return res.render 'register', message: 'username and password are required'
-
+      res.redirect '/user'
+  
+  app.get '/login', (req, res) ->
+    res.render 'login'
+  
+  app.post '/login', passport.authenticate( 'local',
+    successRedirect: '/'
+    failureRedirect: '/login')
+  
+  app.get '/logout', (req, res) ->
+    req.logOut()
+    res.redirect '/'
+  
+  app.get '/register', (req, res) ->
+    res.render 'register' 
+  
+  app.post '/register', (req, res) ->
+    b = req.body
+    if(b.username && b.password)
+      if(b.password != b.passwordConfirm)
+        res.flash 'error', 'Passwords are not the same.'
+        res.redirect '/register'
+      else
+        #try to add to database
+        newUser = new User()
+        newUser.username = b.username
+        newUser.password = b.password
+        newUser.save (err) ->
+          if err
+            res.flash 'error', err
+            res.redirect '/register'
+          else
+            res.flash 'success', 'You have been successfully registered.'
+            res.redirect '/'

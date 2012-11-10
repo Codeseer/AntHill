@@ -5,8 +5,8 @@ Requirement = require './requirement'
 
 Project = new Schema
   name:
-    type: String,
-    unqiue: true,
+    type: String
+    unique: true
     required: true
   requirements: [Requirement.Schema]
 
