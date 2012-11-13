@@ -1,11 +1,33 @@
+extends ../layout
 
-
-//show requirement estimations
-
-//show requirement actuals
-
-//show requirement users actual and estimated data
-
-//if user is part of requirement or manager allow them to input effort
-
-// if manager add user to requirement form
+block content
+  //show requirement estimations
+  |Lines of Code
+  !{requirement.estimation.loc}
+  |Function Point
+  !{requirement.estimation.FP}
+  |Time
+  !{requirement.estimation.time}
+  
+  |Start Date
+  !{requirement.estimation.date.start}
+  
+  |End Date
+  !{requirement.estimation.date.end}
+  //show requirement actuals
+    //show requirement estimations
+  |Lines of Code
+  !{requirement.actual.loc}
+  |Time
+  !{requirement.actual.time}
+  
+  |Start Date
+  !{requirement.actual.date.start}
+  
+  |End Date
+  !{requirement.actual.date.end}
+  //show requirement users actual and estimated data
+  
+  //if user is part of requirement or manager allow them to input effort
+  
+  // if manager add user to requirement form

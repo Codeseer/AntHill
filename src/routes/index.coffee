@@ -5,7 +5,7 @@ module.exports = (app)->
     if(!req.user)
       res.redirect '/login'
     else
-      res.redirect '/home'
+      res.redirect '/projects'
   
   app.get '/login', (req, res) ->
     res.render 'login'

@@ -26,7 +26,7 @@ User.methods.getProjects = (cb) ->
 
 User.methods.isManager = (project, cb) ->  
   username = this.username
-  Project.findOne(name: project).exec (err, project) ->
+  Project.findOne('name': project).exec (err, project) ->
     index = -1
     count = 0
     for user in project.users
@@ -36,6 +36,16 @@ User.methods.isManager = (project, cb) ->
       cb project.users[index].role == 'manager'
     else
       cb false
+
+User.methods.isMember = (project, cb) ->  
+  username = this.username
+  Project.findOne('name': project).exec (err, project) ->
+    index = -1
+    count = 0
+    for user in project.users
+      index = count if user.username == username
+      count++;
+    cb index != -1
 
 exports.Model = mongoose.model 'user', User
 exports.Schema = User

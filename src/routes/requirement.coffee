@@ -1,10 +1,41 @@
+Auth = require './auth'
+Project = require('../models/project').Model
 module.exports = (app) ->
   
   #create  
   app.get '/projects/:project/requirements/new', (req, res) ->
-    res.render 'requirement/new'
+    Auth.manager req, res, '/projects/'+req.params.project, () ->
+      res.render 'requirement/new'
   
   app.post '/projects/:project/requirements', (req, res) ->
+    Auth.manager req, res, '/projects/'+req.params.project, () ->
+      console.log req.body
+      reqUsers = []
+      if req.body.users instanceof Array
+        for user in req.body.users
+          reqUsers.push username: user
+      else
+        reqUsers.push username: req.body.users
+      
+      req.project.requirements.push
+        name: req.body.name
+        description: req.body.description
+        estimation:
+          loc: req.body.loc
+          FP: req.body.FP
+          date:
+            start: req.body.start
+            end: req.body.end
+          time: req.body.time
+        users: reqUsers
+      
+      req.project.save (err) ->
+        if !err
+          res.flash 'success', 'New requirement added.'
+          res.redirect '/projects/'+req.params.project
+        else
+          res.flash 'error', err
+          res.redirect '/projects/'+req.params.project
     
   #delete
   app.delete '/projects/:project/requirements', (req, res) ->

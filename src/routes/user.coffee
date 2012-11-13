@@ -25,7 +25,7 @@ module.exports = (app) ->
             res.flash 'success', 'You have been successfully registered.'
             res.redirect '/'
     
-  app.get '/home', (req, res) ->
+  app.get '/projects', (req, res) ->
     return res.redirect '/login' if !req.user
     #If the fuction gets to here then a user is logged in
     u = req.user
