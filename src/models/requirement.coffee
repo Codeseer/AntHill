@@ -5,7 +5,7 @@ status = ['unstarted', 'design', 'development', 'testing', 'completed', 'discard
 
 Work = new Schema
   desc: String
-  date: Date start time
+  date: Date #start time
   time: Number
 
 RequirementUser = new Schema
@@ -16,7 +16,9 @@ RequirementUser = new Schema
   work: [Work]
 
 Requirement = new Schema
-  name: String
+  name: 
+    type: String
+    unique: true
   description: String
   users:[RequirementUser]
   status:
@@ -34,7 +36,7 @@ Requirement = new Schema
     date:
       start: Date
       end: Date
-      
+
 Requirement.virtual('actual.time').get () ->
   time = 0
   for user in this.users

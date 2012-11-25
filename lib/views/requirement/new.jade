@@ -1,38 +1,42 @@
 extends ../layout
 
 block content
-  form(action="/projects/#{project.name}/requirements", method="POST")
-    h2 New Requirement
-    hr
-    label(for='name') Requirement Name
-    input(type='text', name='name', maxLength='255')
+  .row
+    .span12.center-align
+      form(action="/projects/#{project.name}/requirements", method="POST")
+        h2 New Requirement
+        hr
+        label(for='name') Requirement Name
+        input(type='text', name='name', maxLength='255')
+        
+        label(for='description') Requirement Description
+        input(type='text', name='description', maxLength='255')
     
-    label(for='description') Requirement Description
-    input(type='text', name='description', maxLength='255')
-
-    h2 Estimations
-    hr
-    fieldset(name='estimation')
-      label(for='loc') LoC
-      input(type='text', name='loc', maxLength='255')
-  
-      label(for='FP') Function Points
-      input(type='text', name='FP', maxLength='255')
-      fieldset(name='date')
+        h2 Estimations
+        hr
+        label(for='loc') LoC
+        input(type='text', name='loc', maxLength='255')
+      
+        label(for='FP') Function Points
+        input(type='text', name='FP', maxLength='255')
+        
         label(for='start') Start Date
         input(type='text', name='start', maxLength='255')
+        
         label(for='end') End Date
         input(type='text', name='end', maxLength='255')
-  
-      label(for='time') Person Hours
-      input(type='text', name='time', maxLength='255')
-
-    h2 Users assigned to this requirement
-    hr
-    each user in project.users
-      input(type='checkbox', name='users', value=user.username)
-      =user.username
-    button(type='submit') Create
+      
+        label(for='time') Person Hours
+        input(type='text', name='time', maxLength='255')
+    
+        h2 Users assigned to this requirement
+        hr
+        each user in project.users          
+          input(type='checkbox', name='users', value=user.username)
+          ='  '+user.username+'  '
+        br
+        br
+        button(type='submit', class='btn btn-primary') Create
 
 
   

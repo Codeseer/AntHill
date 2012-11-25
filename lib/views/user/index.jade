@@ -1,17 +1,16 @@
 extends ../layout
 
 block content
-  //show create new project form  
-  a(href='/projects/new') New Project
-
-  //show my projects 
-  ul#projects
-    if locals.projects
-      each project in projects
-        li.project
-          a(href='/projects/#{project.name}')
-            .name=project.name
-            .description=project.description
-            .requirements=project.requirements.length
   
+  .row
+    //show create new project form  
+    a(href='/projects/new', class='btn btn-primary span4 offset4') New Project
+  .row
+      //show my projects
+      each project in projects
+        a(href='/projects/#{project.name}', class='btn span2 project')
+          .name=project.name
+          .description=project.description
+          .requirements=project.requirements.length
+
   

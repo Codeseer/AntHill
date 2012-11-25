@@ -1,14 +1,16 @@
 extends ../layout
 
 block content
-  form(action="", method="POST")
-    label(for='user') username
-    input(type='text', name='username', id='username', maxLength='255')
-
-    label(for='password') password
-    input(type='password', name='password', id='password', maxLength='255')
-
-    label(for='passwordConfirm') confirm password
-    input(type='password', name='passwordConfirm', id='passwordConfirm', maxLength='255')
-
-    button(type='submit') Register
+  .span12.center-align
+    form(action="", method="POST")
+      label(for='user') Username
+      input(type='text', name='username', id='username', maxLength='255')
+  
+      label(for='password') Password
+      input(type='password', name='password', id='password', maxLength='255')
+  
+      label(for='passwordConfirm') Confirm Password
+      input(type='password', name='passwordConfirm', id='passwordConfirm', maxLength='255')
+    
+      br
+      button(type='submit', class='btn btn-primary') Register

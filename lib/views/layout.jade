@@ -6,14 +6,34 @@ html
     else
       title= 'AntHill'
     link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/anthill.css')
     script(src='http://code.jquery.com/jquery-latest.js')
     script(src='/js/bootstrap.min.js')
   body
-    if locals.messages
-      ul#messages
-        while messages.length > 0
-          -var message = messages.pop()
-          li(class=message.type)=message.text
-    if user
-      a(href='/logout') Logout
-    block content
+    .container
+      .row
+        .span12
+          if locals.messages
+            while messages.length > 0
+              -var message = messages.pop()
+              .row
+                div(class='span12 center-align alert alert-'+message.type)
+                  button(type="button",class="close",data-dismiss="alert") x
+                  !{message.text}
+          .row
+            .span6
+              a(href='/') Anthill
+              if project
+                =' -> '
+                a(href='/projects/#{project.name}') !{project.name}
+                if requirement
+                  =' -> '
+                  a(href='/projects/#{project.name}/requirements/#{requirement.name}')!{requirement.name}
+
+            .span6.right-align
+              if user
+                a(href='/logout', class='btn btn-info') Logout
+              else
+                a(href='/login', class='btn btn-primary') Login
+                a(href='/register', class='btn') Register
+          block content

@@ -1,5 +1,7 @@
 exports.user = (req, res, next) ->
   res.locals.user = req.user
+  res.locals.project = null
+  res.locals.requirement = null
   next()
   
 exports.flash = (req, res, next) ->

@@ -1,0 +1,22 @@
+.messages-float{
+  position: fixed;
+  top: 0;
+}
+
+.top-offset{
+  margin-top: 64px;
+}
+
+.right-align{
+  text-align: right;
+}
+.center-align{
+  text-align: center;
+}
+.container {
+  margin-top: 20px;
+}
+
+.project{
+  margin-top: 20px;
+}

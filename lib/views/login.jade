@@ -1,13 +1,13 @@
 extends layout
 
 block content
-  form(action="", method="POST")
-    label(for='username') username
-    input(type='text', name='username', id='username', maxLength='255')
-
-    label(for='password') password
-    input(type='password', name='password', id='password', maxLength='255')
-
-    button(type='submit') Login
-
-  a(href='/register') Register
+  .span12.center-align
+    form(action="", method="POST")
+      label(for='username') Username
+      input(type='text', name='username', id='username', maxLength='255')
+  
+      label(for='password') Password
+      input(type='password', name='password', id='password', maxLength='255')
+      
+      br
+      button(type='submit', class='btn btn-primary') Login

@@ -1,31 +1,43 @@
 extends ../layout
 
 block content
-  //show requirement estimations
-  |Lines of Code
-  !{requirement.estimation.loc}
-  |Function Point
-  !{requirement.estimation.FP}
-  |Time
-  !{requirement.estimation.time}
+  .row
+    .span3
+      h2 Stats
+      br
+      h4 Estimations
+      hr
+       //show requirement estimations
+      |Lines of Code
+      !{requirement.estimation.loc}
+      br
+      |Function Point
+      !{requirement.estimation.FP}
+      br
+      |Time
+      !{requirement.estimation.time}
+      br
+      |Start Date
+      !{requirement.estimation.date.start}
+      br
+      |End Date
+      !{requirement.estimation.date.end}
+      h4 Actual
+      hr
+      |Lines of Code
+      !{requirement.actual.loc}
+      br
+      |Time
+      !{requirement.actual.time}
+      br
+      |Start Date
+      !{requirement.actual.date.start}
+      br
+      |End Date
+      !{requirement.actual.date.end}
+    .span9
+ 
   
-  |Start Date
-  !{requirement.estimation.date.start}
-  
-  |End Date
-  !{requirement.estimation.date.end}
-  //show requirement actuals
-    //show requirement estimations
-  |Lines of Code
-  !{requirement.actual.loc}
-  |Time
-  !{requirement.actual.time}
-  
-  |Start Date
-  !{requirement.actual.date.start}
-  
-  |End Date
-  !{requirement.actual.date.end}
   //show requirement users actual and estimated data
   
   //if user is part of requirement or manager allow them to input effort

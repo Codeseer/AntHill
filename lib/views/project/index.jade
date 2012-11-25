@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   if locals.project
-    a(href='/projects/#{project.name}/requirements/new') New Requirement
+    a(href='/projects/#{project.name}/requirements/new', class='btn btn-primary') New Requirement
     
     //show project estimated stats
     
@@ -24,7 +24,7 @@ block content
           form(action="/projects/#{project.name}/users",method="post")
             input(type="hidden", name="_method", value="delete")
             input(type="hidden", name="username", value=user.username)
-            button(type="submit") Remove
+            button(type="submit", class='btn btn-danger') Remove
       
     
     //add user to project form
