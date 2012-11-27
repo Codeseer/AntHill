@@ -27,25 +27,32 @@ User.methods.getProjects = (cb) ->
 User.methods.isManager = (project, cb) ->  
   username = this.username
   Project.findOne('name': project).exec (err, project) ->
-    index = -1
-    count = 0
-    for user in project.users
-      index = count if user.username == username
-      count++;    
-    if(index != -1)
-      cb project.users[index].role == 'manager'
-    else
+    if !err
+      index = -1
+      count = 0
+      for user in project.users
+        index = count if user.username == username
+        count++;    
+      if(index != -1)
+        cb project.users[index].role == 'manager'
+      else
+        cb false
+    else 
       cb false
 
 User.methods.isMember = (project, cb) ->  
-  username = this.username
+  username = this.username  
+  console.log project
   Project.findOne('name': project).exec (err, project) ->
-    index = -1
-    count = 0
-    for user in project.users
-      index = count if user.username == username
-      count++;
-    cb index != -1
+    if !err
+      index = -1
+      count = 0
+      for user in project.users
+        index = count if user.username == username
+        count++;
+      cb index != -1
+    else
+      cb false
 
 exports.Model = mongoose.model 'user', User
 exports.Schema = User

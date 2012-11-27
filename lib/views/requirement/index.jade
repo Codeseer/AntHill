@@ -35,8 +35,27 @@ block content
       br
       |End Date
       !{requirement.actual.date.end}
-    .span9
- 
+    .span9.center-align
+      table.table
+        tr
+          th Work Description
+          th Start Time
+          th Hours Worked
+        each reqUser in requirement.users
+          each workItem in reqUser.work
+            tr
+              td !{workItem.desc}
+              td !{workItem.date}
+              td !{workItem.time}
+      form(action="/projects/#{project.name}/requirements/#{requirement.name}/users/#{user.username}/work", method="post")
+        label(for='description') Work Description
+        input(type="text", name="description")
+        label(for='date') Start Time
+        input(type="text", name="date")
+        label(for='time') Time worked in hrs
+        input(type="text", name="time")
+        br
+        button(type="submit", class='btn btn-primary') Add 
   
   //show requirement users actual and estimated data
   

@@ -2,38 +2,78 @@ extends ../layout
 
 block content
   if locals.project
-    a(href='/projects/#{project.name}/requirements/new', class='btn btn-primary') New Requirement
+    .row
+      a(href='/projects/#{project.name}/requirements/new', class='btn btn-primary span4 offset4') New Requirement
     
     //show project estimated stats
     
     //show project actual stats
-    
-    //list all requirements for projects
-    ul#requirements
-      each requirement in project.requirements
-        li.requirement
-          a(href='/projects/#{project.name}/requirements/#{requirement.name}')
-            .name=requirement.name
-            .description=requirement.description
-    //show list of users for this project
-    ul#users  
-      each user in project.users
-        li.user
-          .name=user.username
-          .role=user.role
-          form(action="/projects/#{project.name}/users",method="post")
-            input(type="hidden", name="_method", value="delete")
-            input(type="hidden", name="username", value=user.username)
-            button(type="submit", class='btn btn-danger') Remove
-      
-    
-    //add user to project form
-    form(action="/projects/#{project.name}/users",method="post")
-      |Username
-      input(type="text", name="username")
-      select(name='role')
-        option(value='member') Member
-        option(value='manager') Manager
-      button(type="submit") Add
+    .row
+      .span3
+        h2 Stats
+        br
+        h4 Estimations
+        hr
+         //show requirement estimations
+        |Lines of Code: 
+        strong
+          !{project.estimation.loc}
+        br
+        |Time: 
+        strong
+          !{project.estimation.time} hours
+        br
+        |COCOMO Effort 
+        - var effort = Math.round(project.estimation.cocomo.effort * 100)/100
+        br
+        strong
+          !{effort} man-months
+        br
+        |COCOMO Time 
+        - var time = Math.round(project.estimation.cocomo.time * 100)/100
+        br
+        strong
+          !{time} months
+        h4 Actual
+        hr
+        |Lines of Code
+        !{project.actual.loc}
+        br
+        |Time
+        !{project.actual.time}
+      .span9
+        //list all requirements for projects
+        ul#requirements
+          each requirement in project.requirements
+            li.requirement.btn
+              a(href='/projects/#{project.name}/requirements/#{requirement.name}')
+                .name=requirement.name
+                .description=requirement.description      
+    .row.center-align
+      h2 Project Users
+      //show list of users for this project
+      ul#users  
+        each user in project.users
+          li.user.btn
+            .name=user.username
+            .role=user.role
+            form(action="/projects/#{project.name}/users",method="post")
+              input(type="hidden", name="_method", value="delete")
+              input(type="hidden", name="username", value=user.username)
+              button(type="submit", class='btn btn-warning') Remove
+      h2 Project Admin
+      //add user to project form
+      form(action="/projects/#{project.name}/users",method="post")
+        |Username
+        input(type="text", name="username")
+        select(name='role')
+          option(value='member') Member
+          option(value='manager') Manager
+        button(type="submit", class='btn') Add
+  
+      form(action="/projects",method="post")
+        input(type="hidden", name="_method", value="delete")
+        input(type="hidden", name="project", value=project.name)
+        button(type="submit", class='btn btn-danger') Delete Project
 
 

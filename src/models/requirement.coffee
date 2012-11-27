@@ -24,6 +24,7 @@ Requirement = new Schema
   status:
     type: String
     enum: status
+    default: 'unstarted'
   estimation:
     loc: Number
     FP: Number

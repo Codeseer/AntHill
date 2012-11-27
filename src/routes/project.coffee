@@ -17,7 +17,24 @@ module.exports = (app) ->
         newProject.name = b.projectname
         newProject.users.push
           username: req.user.username
-          role: 'manager'        
+          role: 'manager'
+        newProject.estimation.cocomo.mode = b.mode
+        newProject.estimation.cocomo.factors.RELY = b.RELY
+        newProject.estimation.cocomo.factors.DATA = b.DATA
+        newProject.estimation.cocomo.factors.CPLX = b.CPLX
+        newProject.estimation.cocomo.factors.TIME = b.TIME
+        newProject.estimation.cocomo.factors.STOR = b.STOR
+        newProject.estimation.cocomo.factors.VIRT = b.VIRT
+        newProject.estimation.cocomo.factors.TURN = b.TURN
+        newProject.estimation.cocomo.factors.ACAP = b.ACAP
+        newProject.estimation.cocomo.factors.AEXP = b.AEXP
+        newProject.estimation.cocomo.factors.PCAP = b.PCAP
+        newProject.estimation.cocomo.factors.VEXP = b.VEXP
+        newProject.estimation.cocomo.factors.LEXP = b.LEXP
+        newProject.estimation.cocomo.factors.MODP = b.MODP
+        newProject.estimation.cocomo.factors.TOOL = b.TOOL
+        newProject.estimation.cocomo.factors.SCED = b.SCED
+
         newProject.save (err) ->
           if err
             res.flash 'error', err+''
@@ -45,7 +62,7 @@ module.exports = (app) ->
   #delete
   app.delete '/projects', (req, res) ->
     Auth.manager req, res, '/projects', () ->
-      Project.findOne('name': req.body.name).remove (err) ->
+      Project.findOne('name': req.body.project).remove (err) ->
         return res.redirect '/projects'
         
   #####ROUTES FOR project users

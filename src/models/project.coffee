@@ -91,32 +91,32 @@ Project.virtual('actual.time').get () ->
   return time
 
 Project.virtual('estimation.cocomo.effort').get () ->
-  switch this.esitimation.cocomo.mode
+  switch this.estimation.cocomo.mode
     when 'organic'
-      a = 2.4
+      a = 3.2
       b = 1.05
     when 'semi-detached'
       a = 3.0
       b = 1.12
     when 'embedded'
-      a = 3.6
+      a = 2.8
       b = 1.2
   f = this.estimation.cocomo.factors
   prodF = f.RELY*f.DATA*f.CPLX*f.TIME*f.STOR*f.VIRT*f.TURN*f.ACAP*f.AEXP*f.PCAP*f.VEXP*f.LEXP*f.MODP*f.TOOL*f.SCED
   return a * Math.pow(this.estimation.loc/1000,b) * prodF
   
 Project.virtual('estimation.cocomo.time').get () ->
-  switch this.esitimation.cocomo.mode
+  switch this.estimation.cocomo.mode
     when 'organic'
       c = 2.5
       d = 0.38
     when 'semi-detached'
       c = 2.5
-      d = 0.38
+      d = 0.35
     when 'embedded'
       c = 2.5
-      d = 0.38
-  return a * Math.pow(this.estimation.cocomo.effort,d)
+      d = 0.32
+  return c * Math.pow(this.estimation.cocomo.effort,d)
 
 exports.Model = mongoose.model 'project', Project
 exports.Schema = Project

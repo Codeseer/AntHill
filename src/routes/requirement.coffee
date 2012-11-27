@@ -9,7 +9,6 @@ module.exports = (app) ->
   
   app.post '/projects/:project/requirements', (req, res) ->
     Auth.manager req, res, '/projects/'+req.params.project, () ->
-      console.log req.body
       reqUsers = []
       if req.body.users instanceof Array
         for user in req.body.users
@@ -39,11 +38,12 @@ module.exports = (app) ->
     
   #delete
   app.delete '/projects/:project/requirements', (req, res) ->
-    
+  
   
   #read
   app.get '/projects/:project/requirements/:requirement', (req, res) ->
-    res.render 'requirement/index'
+    Auth.member req, res, '/projects/'+req.params.project, () ->
+      res.render 'requirement/index'
   #update
   
   app.get '/projects/:project/requirements/:requirement/edit', (req, res) ->
@@ -68,9 +68,20 @@ module.exports = (app) ->
   
   #CREATE
   app.post '/projects/:project/requirements/:requirement/users/:username/work', (req, res)->
-  
-  #read
-  app.get '/projects/:project/requirements/:requirement/users/:username/work', (req, res) ->
-  
+    Auth.member req, res, '/projects/'+req.params.project, () ->
+      reqUser = null
+      for reqUserTmp in req.requirement.users
+        reqUser = reqUserTmp if reqUserTmp.username = req.params.username
+      reqUser.work.push
+        desc: req.body.description
+        date: req.body.date
+        time: req.body.time
+      req.project.save (err) ->
+        if !err
+          res.flash 'success', 'Work added to requirement.'
+          res.redirect '/projects/'+req.params.project+'/requirements/'+req.params.requirement
+        else
+          res.flash 'error', err.toString()
+          res.redirect '/projects/'+req.params.project+'/requirements/'+req.params.requirement
   #delete
   app.delete '/projects/:project/requirements/:requirement/users/:username/work', (req, res) ->

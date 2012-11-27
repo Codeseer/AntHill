@@ -1,6 +1,6 @@
 manager = (req, res, fail, cb) ->
   user req, res, '/login', ()->
-    req.user.isManager req.params.project, (manager) ->
+    req.user.isManager req.param('project'), (manager) ->
       if !manager
         res.flash 'error', 'You are not a manager of the project.'
         res.redirect fail
@@ -9,7 +9,8 @@ manager = (req, res, fail, cb) ->
 
 member = (req, res, fail, cb) ->
   user req, res, '/login', ()->
-    req.user.isMember req.params.project, (member) ->
+    console.log req.param('project')
+    req.user.isMember req.param('project'), (member) ->
       if !member
         res.flash 'error', 'You are not a member of the project.'
         res.redirect fail

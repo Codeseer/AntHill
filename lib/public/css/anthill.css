@@ -17,6 +17,22 @@
   margin-top: 20px;
 }
 
-.project{
-  margin-top: 20px;
+
+.requirement, .project{
+  margin: 15px;
+  width: 150px;
+}
+
+.user {
+  margin: 10px;
+}
+
+body {
+font-family: 'Varela', sans-serif;
+font-size: 13px;
+line-height: 18px;
+color: #333;
+background-color: #999;
+background: url('/img/whitey.png');
+background-repeat: repeat;
 }
